@@ -7,6 +7,16 @@ class App extends Component {
     medalists
   };
 
+  /**
+   * Design of development the app requirements
+   * 1. Group medalists by their country and medals (G, S, B) won.
+   *    Display countries with their medals in descending order
+   *    in the table format using colmuns of Rank, Country, Gold, Silver, Bronz, Total.
+   *    We can have a component for it, e.g. <Table rows={data} />, where we pass
+   *    data of grouped medalists.
+   * 2. Add filters to Country, Gold, Silver and Bronz columns.
+   */
+
   render() {
     return (
       <div>
