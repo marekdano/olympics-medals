@@ -17,6 +17,42 @@ class App extends Component {
    * 2. Add filters to Country, Gold, Silver and Bronz columns.
    */
 
+  /**
+   * Group athletes by providing a property in "athlete" object.
+   *
+   * @param {array} data
+   * @param {string} property
+   */
+  groupAthletesBy(data, property) {
+    return data.reduce((countries, obj) => {
+      const key = obj[property];
+
+      if (!countries[key]) {
+        countries[key] = {};
+      }
+
+      if (!countries[key].athletes) {
+        countries[key].athletes = [obj];
+      } else {
+        countries[key].athletes.push(obj);
+      }
+
+      return countries;
+    }, {});
+  }
+
+  /**
+   * Count gold, silver or bronze medals in the array of athletes
+   *
+   * @param {array} athletes
+   * @param {string} medalType
+   */
+  countMedalsBy(athletes, medalType) {
+    return athletes.filter(athlete => {
+      return athlete.medal === medalType;
+    }).length;
+  }
+
   render() {
     return (
       <div>
