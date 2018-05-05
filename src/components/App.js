@@ -53,7 +53,36 @@ class App extends Component {
     }).length;
   }
 
+  /**
+   * Get the list of objects with total gold, silver and bronze medals
+   * and the list of athletes for each country.
+   *
+   * @param athletes - object of counties athletes
+   *
+   * e.g. { USA: { athletes: [ Object ] }, KEN: { athletes: [ Object, Object ] } }
+   */
+  getTotalMedals(athletes) {
+    let athletesWithTotals = [];
+    for (const prop in athletes) {
+      athletesWithTotals = [
+        ...athletesWithTotals,
+        {
+          country: prop,
+          ...athletes[prop],
+          totalGold: this.countMedalsBy(athletes[prop].athletes, "Gold"),
+          totalSilver: this.countMedalsBy(athletes[prop].athletes, "Silver"),
+          totalBronze: this.countMedalsBy(athletes[prop].athletes, "Bronze")
+        }
+      ];
+    }
+    return athletesWithTotals;
+  }
+
   render() {
+    const athletesByCountry = this.groupAthletesBy(medalists, "country");
+    // console.log(athletesByCountry);
+    // console.log(this.getTotalMedals(athletesByCountry));
+
     return (
       <div>
         <h1>Athletes</h1>

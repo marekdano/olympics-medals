@@ -45,3 +45,9 @@ describe("countMedalsBy", () => {
     expect(App.prototype.countMedalsBy(athletes, "Bronze")).toEqual(0);
   });
 });
+
+// TODO: add test cases for groupAthletesBy method
+describe("groupAthletesBy", () => {});
+
+// TODO: add test cases for getTotalMedals method
+describe("getTotalMedals", () => {});
