@@ -78,10 +78,34 @@ class App extends Component {
     return athletesWithTotals;
   }
 
+  /**
+   *
+   * @param countries -
+   */
+  rankCountriesByMedalCount(countries) {
+    countries.sort((country1, country2) => {
+      const total1 =
+        country1.totalGold * 10000 +
+        country1.totalSilver * 100 +
+        country1.totalBronze;
+      const total2 =
+        country2.totalGold * 10000 +
+        country2.totalSilver * 100 +
+        country2.totalBronze;
+      return total2 - total1;
+    });
+    return countries;
+  }
+
   render() {
     const athletesByCountry = this.groupAthletesBy(medalists, "country");
+    const countryWithMedalCounts = this.getTotalMedals(athletesByCountry);
+    const rankCountries = this.rankCountriesByMedalCount(
+      countryWithMedalCounts
+    );
     // console.log(athletesByCountry);
     // console.log(this.getTotalMedals(athletesByCountry));
+    //console.log(rankCountries.map(c => c.country));
 
     return (
       <div>
