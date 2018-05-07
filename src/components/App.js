@@ -4,7 +4,8 @@ import medalists from "../data/olympics_medalists";
 
 class App extends Component {
   state = {
-    medalists
+    medalists,
+    rankCountries: null
   };
 
   /**
@@ -57,8 +58,7 @@ class App extends Component {
    * Get the list of objects with total gold, silver and bronze medals
    * and the list of athletes for each country.
    *
-   * @param athletes - object of counties athletes
-   *
+   * @param athletes - object of counties athletes in the following form:
    * e.g. { USA: { athletes: [ Object ] }, KEN: { athletes: [ Object, Object ] } }
    */
   getTotalMedals(athletes) {
@@ -79,8 +79,14 @@ class App extends Component {
   }
 
   /**
+   * Get the array of countries with properties of "country", "athletes",
+   * "totalGold", "totalSilver" and "totalBronze". The array of countries is
+   * sorted in descending order by the formula
    *
-   * @param countries -
+   *  total = totalGold * 10000 + totalSilver * 100 + totalBronze
+   *
+   * @param countries - array of countries sorted by calculation of gold,
+   * silver and bronze medals.
    */
   rankCountriesByMedalCount(countries) {
     countries.sort((country1, country2) => {
@@ -97,29 +103,37 @@ class App extends Component {
     return countries;
   }
 
-  render() {
+  /**
+   * Update state of rankCountries after getting an array of sorted countries
+   * with total medals.
+   */
+  componentDidMount() {
     const athletesByCountry = this.groupAthletesBy(medalists, "country");
     const countryWithMedalCounts = this.getTotalMedals(athletesByCountry);
     const rankCountries = this.rankCountriesByMedalCount(
       countryWithMedalCounts
     );
-    // console.log(athletesByCountry);
-    // console.log(this.getTotalMedals(athletesByCountry));
-    //console.log(rankCountries.map(c => c.country));
+    this.setState({ rankCountries });
+  }
 
+  render() {
     return (
       <div>
         <h1>Athletes</h1>
-        {this.state.medalists.map(medalist => {
-          return (
-            <div key={medalist.athlete + medalist.event}>
-              <h3>Athlete</h3>
-              <p>{medalist.athlete}</p>
-              <p>medal: {medalist.medal}</p>
-            </div>
-          );
-        })}
-        <p>{this.state.medalists[0].athlete}</p>
+        {this.state.rankCountries &&
+          this.state.rankCountries.map((row, index) => {
+            return (
+              <div key={row.country}>
+                <h3>Rank: {index + 1}</h3>
+                <h3>Country</h3>
+                <p>{row.country}</p>
+                <p>Gold: {row.totalGold}</p>
+                <p>Silver: {row.totalSilver}</p>
+                <p>Bronze: {row.totalBronze}</p>
+                <p>Total: {row.athletes.length}</p>
+              </div>
+            );
+          })}
       </div>
     );
   }
