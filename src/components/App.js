@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
+import Table from "./Table/Table";
 import medalists from "../data/olympics_medalists";
 
 class App extends Component {
@@ -118,9 +119,10 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-        <h1>Athletes</h1>
-        {this.state.rankCountries &&
+      <div className="main">
+        <h3>Medal table</h3>
+        <h5 className="sub-header">Olympics games 2008</h5>
+        {/* {this.state.rankCountries &&
           this.state.rankCountries.map((row, index) => {
             return (
               <div key={row.country}>
@@ -133,7 +135,8 @@ class App extends Component {
                 <p>Total: {row.athletes.length}</p>
               </div>
             );
-          })}
+          })} */}
+        <Table rows={this.state.rankCountries} />
       </div>
     );
   }
