@@ -1,6 +1,7 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-const table = ({ rows }) => (
+const Table = ({ rows }) => (
   <table>
     <thead>
       <tr>
@@ -28,6 +29,15 @@ const table = ({ rows }) => (
   </table>
 );
 
-// TODO: add PropsType
+Table.propTypes = {
+  rows: PropTypes.arrayOf(
+    PropTypes.shape({
+      country: PropTypes.string.isRequired,
+      totalGold: PropTypes.number.isRequired,
+      totalSilver: PropTypes.number.isRequired,
+      totalBronze: PropTypes.number.isRequired
+    })
+  )
+};
 
-export default table;
+export default Table;
