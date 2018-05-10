@@ -33,6 +33,15 @@ Table.propTypes = {
   rows: PropTypes.arrayOf(
     PropTypes.shape({
       country: PropTypes.string.isRequired,
+      athletes: PropTypes.arrayOf(
+        PropTypes.shape({
+          athlete: PropTypes.string.isRequired,
+          country: PropTypes.string.isRequired,
+          sex: PropTypes.string.isRequired,
+          event: PropTypes.string.isRequired,
+          medal: PropTypes.string.isRequired
+        })
+      ),
       totalGold: PropTypes.number.isRequired,
       totalSilver: PropTypes.number.isRequired,
       totalBronze: PropTypes.number.isRequired
