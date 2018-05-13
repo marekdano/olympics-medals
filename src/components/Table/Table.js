@@ -7,9 +7,15 @@ const Table = ({ rows }) => (
     <thead>
       <tr>
         <th className="cell-align-left">Country</th>
-        <th className="gold-icon">Gold</th>
-        <th>Silver</th>
-        <th>Bronze</th>
+        <th>
+          <span className="medal-icon medal-icon__gold" />
+        </th>
+        <th>
+          <span className="medal-icon medal-icon__silver" />
+        </th>
+        <th>
+          <span className="medal-icon medal-icon__bronze" />
+        </th>
         <th>Total</th>
       </tr>
     </thead>
