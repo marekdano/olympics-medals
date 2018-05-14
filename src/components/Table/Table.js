@@ -6,6 +6,7 @@ const Table = ({ rows }) => (
   <table>
     <thead>
       <tr>
+        <th className="cell-align-left">Rank</th>
         <th className="cell-align-left">Country</th>
         <th>
           <span className="medal-icon medal-icon__gold" />
@@ -24,6 +25,7 @@ const Table = ({ rows }) => (
         rows.map(row => {
           return (
             <tr key={row.country}>
+              <td className="cell-align-left" />
               <td className="cell-align-left">{row.country}</td>
               <td>{row.totalGold}</td>
               <td>{row.totalSilver}</td>
