@@ -1,11 +1,15 @@
-import React, { Component } from "react";
+import React, {
+  Component
+} from "react";
 import "./App.css";
 import Table from "./Table/Table";
 import medalists from "../data/olympics_medalists";
+import countries from "../data/countries.json";
 
 class App extends Component {
   state = {
     medalists,
+    countries,
     rankCountries: null
   };
 
@@ -104,38 +108,45 @@ class App extends Component {
     return countries;
   }
 
+  getCountriesObj(countries) {
+    return countries.reduce((list, country) => {
+      list[country['alpha3Code']] = country;
+      return list;
+    }, {})
+  }
+
+  addCountryFlagAndName(rankCountries, countriesData) {
+    return rankCountries.map(obj => {
+      const { name, flag } = countriesData[obj['country']];
+
+      return { ...obj, name, flag };
+    });
+  }
+
   /**
    * Update state of rankCountries after getting an array of sorted countries
    * with total medals.
    */
   componentDidMount() {
+    const countriesData = this.getCountriesObj(this.state.countries);
     const athletesByCountry = this.groupAthletesBy(medalists, "country");
     const countryWithMedalCounts = this.getTotalMedals(athletesByCountry);
     const rankCountries = this.rankCountriesByMedalCount(
       countryWithMedalCounts
     );
-    this.setState({ rankCountries });
+
+    const rankCountriesWithNameAndFlag = this.addCountryFlagAndName(rankCountries, countriesData);
+
+    this.setState({
+      rankCountries: rankCountriesWithNameAndFlag
+    });
   }
 
   render() {
-    return (
-      <div className="main">
-        <h3>Medal table</h3>
-        <h5 className="sub-header">Olympics games 2008</h5>
-        {/* {this.state.rankCountries &&
-          this.state.rankCountries.map((row, index) => {
-            return (
-              <div key={row.country}>
-                <h3>Rank: {index + 1}</h3>
-                <h3>Country</h3>
-                <p>{row.country}</p>
-                <p>Gold: {row.totalGold}</p>
-                <p>Silver: {row.totalSilver}</p>
-                <p>Bronze: {row.totalBronze}</p>
-                <p>Total: {row.athletes.length}</p>
-              </div>
-            );
-          })} */}
+    return ( 
+      <div className="main" >
+        <h3> Medal table </h3> 
+        <h5 className="sub-header">Olympics games 2008</h5> 
         <Table rows={this.state.rankCountries} />
       </div>
     );
