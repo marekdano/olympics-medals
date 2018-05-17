@@ -1,5 +1,6 @@
 table {
   border-collapse: collapse;
+  width: 100%;
 }
 
 thead tr:first-child {
@@ -12,6 +13,16 @@ tr:nth-child(even) {
 
 td {
   padding: 0.5rem;
+}
+
+td .cell {
+  display: flex;
+}
+
+td img {
+  margin: 0 8px 0;
+  width: 20px;
+  height: 15px;
 }
 
 tbody tr:hover {

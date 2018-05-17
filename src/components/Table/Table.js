@@ -32,7 +32,12 @@ const Table = ({rows}) => (
           return ( 
             <tr key={row.country}>
               <td className="cell-align-left"></td>
-              <td className="cell-align-left">{row.name}</td>
+              <td>
+                <div className="cell cell-align-left">
+                  <img src={row.flag} />
+                  <span>{row.name}</span>
+                </div>
+              </td>
               <td>{row.totalGold}</td>
               <td>{row.totalSilver}</td> 
               <td>{row.totalBronze} </td>
