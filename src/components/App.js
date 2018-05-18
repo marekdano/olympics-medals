@@ -93,7 +93,7 @@ class App extends Component {
    * @param countries - array of countries sorted by calculation of gold,
    * silver and bronze medals.
    */
-  rankCountriesByMedalCount(countries) {
+  orderCountriesByMedalCount(countries) {
     countries.sort((country1, country2) => {
       const total1 =
         country1.totalGold * 10000 +
@@ -108,6 +108,9 @@ class App extends Component {
     return countries;
   }
 
+  /**
+   * Get the object of counties where keys are countries code.
+   */
   getCountriesObj(countries) {
     return countries.reduce((list, country) => {
       list[country['alpha3Code']] = country;
@@ -115,6 +118,9 @@ class App extends Component {
     }, {})
   }
 
+  /**
+   * Add country name and flag to the list of sorted countries with medals.
+   */
   addCountryFlagAndName(rankCountries, countriesData) {
     return rankCountries.map(obj => {
       const { name, flag } = countriesData[obj['country']];
@@ -131,14 +137,14 @@ class App extends Component {
     const countriesData = this.getCountriesObj(this.state.countries);
     const athletesByCountry = this.groupAthletesBy(medalists, "country");
     const countryWithMedalCounts = this.getTotalMedals(athletesByCountry);
-    const rankCountries = this.rankCountriesByMedalCount(
+    const orderedCountries = this.orderCountriesByMedalCount(
       countryWithMedalCounts
     );
 
-    const rankCountriesWithNameAndFlag = this.addCountryFlagAndName(rankCountries, countriesData);
+    const countriesWithNameAndFlag = this.addCountryFlagAndName(orderedCountries, countriesData);
 
     this.setState({
-      rankCountries: rankCountriesWithNameAndFlag
+      rankCountries: countriesWithNameAndFlag
     });
   }
 

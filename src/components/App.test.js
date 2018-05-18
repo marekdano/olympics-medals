@@ -70,8 +70,7 @@ describe("AppComponent", () => {
         )
       ).toEqual("ETH");
       expect(
-        App.prototype.groupAthletesBy(athletes, "country")["ETH"]["athletes"]
-          .length
+        App.prototype.groupAthletesBy(athletes, "country")["ETH"]["athletes"].length
       ).toEqual(3);
     });
   });
@@ -109,7 +108,7 @@ describe("AppComponent", () => {
     });
   });
 
-  describe("rankCountriesByMedalCount", () => {
+  describe("orderCountriesByMedalCount", () => {
     it("should sort the list of countries by medal count", () => {
       const athletesByCountry = App.prototype.groupAthletesBy(
         athletes,
@@ -118,13 +117,32 @@ describe("AppComponent", () => {
       const countryWithMedalCounts = App.prototype.getTotalMedals(
         athletesByCountry
       );
+      const orderedCountries = App.prototype.orderCountriesByMedalCount(
+        countryWithMedalCounts
+      );
 
-      expect(
-        App.prototype.rankCountriesByMedalCount(countryWithMedalCounts)[0]
-      ).toMatchObject({ country: "ETH" });
-      expect(
-        App.prototype.rankCountriesByMedalCount(countryWithMedalCounts)[1]
-      ).toMatchObject({ country: "USA" });
+      expect(orderedCountries[0]).toMatchObject({ country: "ETH" });
+      expect(orderedCountries[1]).toMatchObject({ country: "USA" });
+    });
+  });
+
+  describe("addRanks", () => {
+    it("should add rank to each country", () => {
+      const athletesByCountry = App.prototype.groupAthletesBy(
+        athletes,
+        "country"
+      );
+      const countryWithMedalCounts = App.prototype.getTotalMedals(
+        athletesByCountry
+      );
+
+      const orderedCountries = App.prototype.orderCountriesByMedalCount(
+        countryWithMedalCounts
+      );
+      const contriesWithRank = App.prototype.addRanks(orderedCountries);
+
+      expect(contriesWithRank[0]).toMatchObject({ country: "ETH", rank: 1 });
+      expect(contriesWithRank[1]).toMatchObject({ country: "USA", rank: 2 });
     });
   });
 });
