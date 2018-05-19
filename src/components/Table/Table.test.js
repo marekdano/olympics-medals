@@ -36,7 +36,10 @@ describe("<Table />", () => {
         ],
         totalGold: 1,
         totalSilver: 0,
-        totalBronze: 1
+        totalBronze: 1,
+        rank: 1,
+        name: "United States of America",
+        flag: ""
       },
       {
         country: "AUS",
@@ -51,12 +54,15 @@ describe("<Table />", () => {
         ],
         totalGold: 0,
         totalSilver: 1,
-        totalBronze: 0
+        totalBronze: 0, 
+        rank: 2,
+        name: "Australia",
+        flag: ""
       }
     ];
     wrapper.setProps({ rows: list });
-    expect(wrapper.contains("USA")).toEqual(true);
-    expect(wrapper.contains("AUS")).toEqual(true);
+    expect(wrapper.contains("United States of America")).toEqual(true);
+    expect(wrapper.contains("Australia")).toEqual(true);
 
     const rows = wrapper.find("tr");
     expect(rows.length).toEqual(3);
@@ -65,27 +71,27 @@ describe("<Table />", () => {
       .first()
       .find("th")
       .map(column => column.text());
-    expect(firstRowColumns.length).toEqual(5);
-    expect(firstRowColumns[0]).toEqual("Country");
-    expect(firstRowColumns[1]).toEqual("Gold");
-    expect(firstRowColumns[3]).toEqual("Bronze");
-    expect(firstRowColumns[4]).toEqual("Total");
+    expect(firstRowColumns.length).toEqual(6);
+    expect(firstRowColumns[0]).toEqual("Rank");
+    expect(firstRowColumns[1]).toEqual("Country");
+    expect(firstRowColumns[5]).toEqual("Total");
 
     const lastRowColumns = rows
       .last()
       .find("td")
       .map(column => column.text());
-    expect(lastRowColumns.length).toEqual(5);
-    expect(lastRowColumns[0]).toEqual("AUS");
-    expect(lastRowColumns[1]).toEqual("0");
-    expect(lastRowColumns[2]).toEqual("1");
-    expect(lastRowColumns[3]).toEqual("0");
-    expect(lastRowColumns[4]).toEqual("1");
+    expect(lastRowColumns.length).toEqual(6);
+    expect(lastRowColumns[0]).toEqual("2");
+    expect(lastRowColumns[1]).toEqual("Australia");
+    expect(lastRowColumns[2]).toEqual("0");
+    expect(lastRowColumns[3]).toEqual("1");
+    expect(lastRowColumns[4]).toEqual("0");
+    expect(lastRowColumns[5]).toEqual("1");
   });
 
   it("should render table with no data and display table headers with 5 columns", () => {
     wrapper.setProps({ rows: [] });
-    expect(wrapper.find("th")).toHaveLength(5);
+    expect(wrapper.find("th")).toHaveLength(6);
     expect(wrapper.find("td")).toHaveLength(0);
   });
 });

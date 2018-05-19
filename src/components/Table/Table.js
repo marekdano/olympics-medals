@@ -31,7 +31,9 @@ const Table = ({rows}) => (
         rows.map(row => {
           return ( 
             <tr key={row.country}>
-              <td className="cell-align-left"></td>
+              <td className="cell-align-left">
+                {row.rank}
+              </td>
               <td>
                 <div className="cell cell-align-left">
                   <img src={row.flag} />
@@ -40,8 +42,8 @@ const Table = ({rows}) => (
               </td>
               <td>{row.totalGold}</td>
               <td>{row.totalSilver}</td> 
-              <td>{row.totalBronze} </td>
-              <td> {row.athletes.length} </td> 
+              <td>{row.totalBronze}</td>
+              <td>{row.athletes.length}</td> 
             </tr>
           );
         })
@@ -67,7 +69,8 @@ Table.propTypes = {
       ),
       totalGold: PropTypes.number.isRequired,
       totalSilver: PropTypes.number.isRequired,
-      totalBronze: PropTypes.number.isRequired
+      totalBronze: PropTypes.number.isRequired,
+      rank: PropTypes.number.isRequired
     })
   )
 };
