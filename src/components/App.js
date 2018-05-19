@@ -124,11 +124,25 @@ class App extends Component {
   addCountryFlagAndName(rankCountries, countriesData) {
     return rankCountries.map(obj => {
       const { name, flag } = countriesData[obj['country']];
-
       return { ...obj, name, flag };
     });
   }
 
+  addRanks(countries) {
+    let prevTotal, currTotal = 0;
+    let rank, total;
+    return countries.map((country, index) => {
+      currTotal =
+        country.totalGold * 10000 +
+        country.totalSilver * 100 +
+        country.totalBronze;
+      
+      rank = currTotal === prevTotal ? rank : index + 1;
+      prevTotal = currTotal;
+
+      return { ...country, rank }
+    })
+  }
   /**
    * Update state of rankCountries after getting an array of sorted countries
    * with total medals.
@@ -142,9 +156,10 @@ class App extends Component {
     );
 
     const countriesWithNameAndFlag = this.addCountryFlagAndName(orderedCountries, countriesData);
+    const countriesWithRank = this.addRanks(countriesWithNameAndFlag);
 
     this.setState({
-      rankCountries: countriesWithNameAndFlag
+      rankCountries: countriesWithRank
     });
   }
 
