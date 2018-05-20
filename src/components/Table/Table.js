@@ -24,6 +24,7 @@ const Table = ({rows}) => (
         <th>
           Total
         </th> 
+        <th></th>
       </tr> 
     </thead> 
     <tbody> 
@@ -36,7 +37,7 @@ const Table = ({rows}) => (
               </td>
               <td>
                 <div className="cell cell-align-left">
-                  <img src={row.flag} />
+                  <img src={row.flag} alt="country flag"/>
                   <span>{row.name}</span>
                 </div>
               </td>
@@ -44,6 +45,9 @@ const Table = ({rows}) => (
               <td>{row.totalSilver}</td> 
               <td>{row.totalBronze}</td>
               <td>{row.athletes.length}</td> 
+              <td>
+                <span className="icon__plus"></span>
+              </td>
             </tr>
           );
         })

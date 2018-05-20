@@ -25,6 +25,15 @@ td img {
   height: 15px;
 }
 
+td .icon__plus::after {
+  display: block;
+  content: '';
+  width: 20px;
+  height: 20px;
+  background: url(/icon__plus.svg) no-repeat;
+  background-size: contain;
+}
+
 tbody tr:hover {
   background: #fab842;
 }

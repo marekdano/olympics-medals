@@ -71,7 +71,7 @@ describe("<Table />", () => {
       .first()
       .find("th")
       .map(column => column.text());
-    expect(firstRowColumns.length).toEqual(6);
+    expect(firstRowColumns.length).toEqual(7);
     expect(firstRowColumns[0]).toEqual("Rank");
     expect(firstRowColumns[1]).toEqual("Country");
     expect(firstRowColumns[5]).toEqual("Total");
@@ -80,7 +80,7 @@ describe("<Table />", () => {
       .last()
       .find("td")
       .map(column => column.text());
-    expect(lastRowColumns.length).toEqual(6);
+    expect(lastRowColumns.length).toEqual(7);
     expect(lastRowColumns[0]).toEqual("2");
     expect(lastRowColumns[1]).toEqual("Australia");
     expect(lastRowColumns[2]).toEqual("0");
@@ -91,7 +91,7 @@ describe("<Table />", () => {
 
   it("should render table with no data and display table headers with 5 columns", () => {
     wrapper.setProps({ rows: [] });
-    expect(wrapper.find("th")).toHaveLength(6);
+    expect(wrapper.find("th")).toHaveLength(7);
     expect(wrapper.find("td")).toHaveLength(0);
   });
 });
