@@ -130,7 +130,7 @@ class App extends Component {
 
   addRanks(countries) {
     let prevTotal, currTotal = 0;
-    let rank, total;
+    let rank;
     return countries.map((country, index) => {
       currTotal =
         country.totalGold * 10000 +
