@@ -3,6 +3,7 @@ import React, {
 } from "react";
 import "./App.css";
 import Table from "./Table/Table";
+import Modal from './Modal/Modal';
 import medalists from "../data/olympics_medalists";
 import countries from "../data/countries.json";
 
