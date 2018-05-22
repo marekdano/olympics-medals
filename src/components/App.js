@@ -54,7 +54,7 @@ class App extends Component {
    * @param {array} athletes
    * @param {string} medalType
    */
-  countMedalsBy(athletes, medalType) {
+  countMedalsBy(medalType, athletes) {
     return athletes.filter(athlete => {
       return athlete.medal === medalType;
     }).length;
@@ -111,6 +111,7 @@ class App extends Component {
 
   /**
    * Get the object of counties where keys are countries code.
+   * @param countries - the list of countries with data
    */
   getCountriesObj(countries) {
     return countries.reduce((list, country) => {
@@ -129,6 +130,9 @@ class App extends Component {
     });
   }
 
+  /**
+   * Add rank property of number to the list of countries. 
+   */
   addRanks(countries) {
     let prevTotal, currTotal = 0;
     let rank;
@@ -143,6 +147,17 @@ class App extends Component {
 
       return { ...country, rank }
     })
+  }
+
+  /**
+   * Get list of countries with athletes medals filtered by medal type
+   * gold, silver or bronze.
+   */
+  filterBy(medalTyp, term) {
+    // 'total'+medalType e.g. totalGold
+    return this.state.rankCountries.filter(country => {
+      return country[`${total}medalType`] > 0;
+    });
   }
   /**
    * Update state of rankCountries after getting an array of sorted countries
