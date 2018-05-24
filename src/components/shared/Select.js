@@ -1,9 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
+import './Select.css';
+
 
 const Select = ({name, title, placeholder, value, options, handleChange}) => {
   return (
-    <div className="form-group">
+    <div className="select">
       <label htmlFor={name}>{title}</label>
       <select
         name={name}
