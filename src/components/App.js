@@ -4,6 +4,7 @@ import React, {
 import "./App.css";
 import Table from "./Table/Table";
 import Modal from './Modal/Modal';
+import Select from './shared/Select';
 import medalists from "../data/olympics_medalists";
 import countries from "../data/countries.json";
 
@@ -11,6 +12,7 @@ class App extends Component {
   state = {
     medalists,
     countries,
+    filteredMedalType: "",
     rankCountries: null
   };
 
@@ -30,7 +32,7 @@ class App extends Component {
    * @param {array} data
    * @param {string} property
    */
-  groupAthletesBy(data, property) {
+  groupAthletesBy(property, data) {
     return data.reduce((countries, obj) => {
       const key = obj[property];
 
@@ -75,9 +77,9 @@ class App extends Component {
         {
           country: prop,
           ...athletes[prop],
-          totalGold: this.countMedalsBy(athletes[prop].athletes, "Gold"),
-          totalSilver: this.countMedalsBy(athletes[prop].athletes, "Silver"),
-          totalBronze: this.countMedalsBy(athletes[prop].athletes, "Bronze")
+          totalGold: this.countMedalsBy("Gold", athletes[prop].athletes),
+          totalSilver: this.countMedalsBy("Silver", athletes[prop].athletes),
+          totalBronze: this.countMedalsBy("Bronze", athletes[prop].athletes)
         }
       ];
     }
@@ -153,10 +155,10 @@ class App extends Component {
    * Get list of countries with athletes medals filtered by medal type
    * gold, silver or bronze.
    */
-  filterBy(medalTyp, term) {
-    // 'total'+medalType e.g. totalGold
+  filterByMedalType() {
+    const property = `total${this.state.filteredMedalType}` // e.g. totalGold
     return this.state.rankCountries.filter(country => {
-      return country[`${total}medalType`] > 0;
+      return country[property] > 0;
     });
   }
   /**
@@ -165,7 +167,7 @@ class App extends Component {
    */
   componentDidMount() {
     const countriesData = this.getCountriesObj(this.state.countries);
-    const athletesByCountry = this.groupAthletesBy(medalists, "country");
+    const athletesByCountry = this.groupAthletesBy("country", medalists);
     const countryWithMedalCounts = this.getTotalMedals(athletesByCountry);
     const orderedCountries = this.orderCountriesByMedalCount(
       countryWithMedalCounts
@@ -179,11 +181,27 @@ class App extends Component {
     });
   }
 
+  handleChange = (e) => {
+    const value = e.target.value;
+    this.setState({filteredMedalType: value});
+    // TODO: 
+    // call filterByMedalType when value is Gold, Silver or Bronze
+    // if value is All return array of rankCountries
+  }
+  
   render() {
     return ( 
-      <div className="main" >
+      <div className="main">
         <h3> Medal table </h3> 
         <h5 className="sub-header">Olympics games 2008</h5> 
+        <Select 
+          name={"medalType"} 
+          title={""} 
+          placeholder={"Filter medals"}
+          value={this.state.filteredMedalType} 
+          options={["All", "Gold", "Silver", "Bronze"]} 
+          handleChange={this.handleChange} 
+        />
         <Table rows={this.state.rankCountries} />
       </div>
     );

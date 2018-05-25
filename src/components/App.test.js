@@ -49,35 +49,35 @@ describe("AppComponent", () => {
 
   describe("countMedalsBy", () => {
     it("should count gold medals and return 2", () => {
-      expect(App.prototype.countMedalsBy(athletes, "Gold")).toEqual(4);
+      expect(App.prototype.countMedalsBy("Gold", athletes)).toEqual(4);
     });
 
     it("should count silver medals and return 1", () => {
-      expect(App.prototype.countMedalsBy(athletes, "Silver")).toEqual(1);
+      expect(App.prototype.countMedalsBy("Silver", athletes)).toEqual(1);
     });
 
     it("should count bronze medals and return 0", () => {
-      expect(App.prototype.countMedalsBy(athletes, "Bronze")).toEqual(0);
+      expect(App.prototype.countMedalsBy("Bronze", athletes)).toEqual(0);
     });
   });
 
   describe("groupAthletesBy", () => {
     it("should group atletes by country", () => {
       expect(
-        Object.keys(App.prototype.groupAthletesBy(athletes, "country")).length
+        Object.keys(App.prototype.groupAthletesBy("country", athletes)).length
       ).toEqual(3);
       expect(
-        Object.keys(App.prototype.groupAthletesBy(athletes, "country")).find(
+        Object.keys(App.prototype.groupAthletesBy("country", athletes)).find(
           c => c === "USA"
         )
       ).toEqual("USA");
       expect(
-        Object.keys(App.prototype.groupAthletesBy(athletes, "country")).find(
+        Object.keys(App.prototype.groupAthletesBy("country", athletes)).find(
           c => c === "ETH"
         )
       ).toEqual("ETH");
       expect(
-        App.prototype.groupAthletesBy(athletes, "country")["ETH"]["athletes"].length
+        App.prototype.groupAthletesBy("country", athletes)["ETH"]["athletes"].length
       ).toEqual(3);
     });
   });
@@ -85,8 +85,8 @@ describe("AppComponent", () => {
   describe("getTotalMedals", () => {
     it("should contains new property of totalGold, totalSilver, totalBronze and country in the returned list of objects", () => {
       const athletesByCountry = App.prototype.groupAthletesBy(
-        athletes,
-        "country"
+        "country",
+        athletes
       );
       expect(App.prototype.getTotalMedals(athletesByCountry)[0]).toMatchObject({
         country: "ETH",
@@ -118,8 +118,8 @@ describe("AppComponent", () => {
   describe("orderCountriesByMedalCount", () => {
     it("should sort the list of countries by medal count", () => {
       const athletesByCountry = App.prototype.groupAthletesBy(
-        athletes,
-        "country"
+        "country",
+        athletes
       );
       const countryWithMedalCounts = App.prototype.getTotalMedals(
         athletesByCountry
@@ -136,8 +136,8 @@ describe("AppComponent", () => {
   describe("addRanks", () => {
     it("should add rank to each country", () => {
       const athletesByCountry = App.prototype.groupAthletesBy(
-        athletes,
-        "country"
+        "country",
+        athletes
       );
       const countryWithMedalCounts = App.prototype.getTotalMedals(
         athletesByCountry
@@ -155,8 +155,8 @@ describe("AppComponent", () => {
     it("should have two countries with the same rank number", () => {
       it("should add rank to each country", () => {
       const athletesByCountry = App.prototype.groupAthletesBy(
-        athletes,
         "country"
+        athletes
       );
       const countryWithMedalCounts = App.prototype.getTotalMedals(
         athletesByCountry

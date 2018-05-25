@@ -2,59 +2,61 @@ import React from "react";
 import PropTypes from "prop-types";
 import "./Table.css";
 
-const Table = ({rows}) => ( 
-  <table>
-    <thead >
-      <tr>
-        <th className="cell-align-left">
-          Rank
-        </th> 
-        <th className="cell-align-left">
-          Country
-        </th>
-        <th>
-          <span className="medal-icon medal-icon__gold"></span>
-        </th>
-        <th>
-          <span className="medal-icon medal-icon__silver"></span>
-        </th>
-        <th>
-          <span className="medal-icon medal-icon__bronze"></span>
-        </th> 
-        <th>
-          Total
-        </th> 
-        <th></th>
-      </tr> 
-    </thead> 
-    <tbody> 
-      {rows && 
-        rows.map(row => {
-          return ( 
-            <tr key={row.country}>
-              <td className="cell-align-left">
-                {row.rank}
-              </td>
-              <td>
-                <div className="cell cell-align-left">
-                  <img src={row.flag} alt="country flag"/>
-                  <span>{row.name}</span>
-                </div>
-              </td>
-              <td>{row.totalGold}</td>
-              <td>{row.totalSilver}</td> 
-              <td>{row.totalBronze}</td>
-              <td>{row.athletes.length}</td> 
-              <td>
-                <span className="icon__plus"></span>
-              </td>
-            </tr>
-          );
-        })
-      }
-    </tbody> 
-  </table>
-);
+const Table = ({rows}) => { 
+  return (
+    <table>
+      <thead>
+        <tr>
+          <th className="cell-align-left">
+            Rank
+          </th> 
+          <th className="cell-align-left">
+            Country
+          </th>
+          <th>
+            <span className="medal-icon medal-icon__gold"></span>
+          </th>
+          <th>
+            <span className="medal-icon medal-icon__silver"></span>
+          </th>
+          <th>
+            <span className="medal-icon medal-icon__bronze"></span>
+          </th> 
+          <th>
+            Total
+          </th> 
+          <th></th>
+        </tr> 
+      </thead> 
+      <tbody> 
+        {rows && 
+          rows.map(row => {
+            return ( 
+              <tr key={row.country}>
+                <td className="cell-align-left">
+                  {row.rank}
+                </td>
+                <td>
+                  <div className="cell cell-align-left">
+                    <img src={row.flag} alt="country flag"/>
+                    <span>{row.name}</span>
+                  </div>
+                </td>
+                <td>{row.totalGold}</td>
+                <td>{row.totalSilver}</td> 
+                <td>{row.totalBronze}</td>
+                <td>{row.athletes.length}</td> 
+                <td>
+                  <span className="icon__plus"></span>
+                </td>
+              </tr>
+            );
+          })
+        }
+      </tbody> 
+    </table>
+  );
+}
 
 Table.propTypes = {
   rows: PropTypes.arrayOf(
