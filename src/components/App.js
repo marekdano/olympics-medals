@@ -13,7 +13,8 @@ class App extends Component {
     medalists,
     countries,
     filteredMedalType: "",
-    rankCountries: null
+    filteredCountries: [],
+    rankCountries: []
   };
 
   /**
@@ -155,8 +156,8 @@ class App extends Component {
    * Get list of countries with athletes medals filtered by medal type
    * gold, silver or bronze.
    */
-  filterByMedalType() {
-    const property = `total${this.state.filteredMedalType}` // e.g. totalGold
+  filterCountriesByMedalType(medalType) {
+    const property = `total${medalType}` // e.g. totalGold
     return this.state.rankCountries.filter(country => {
       return country[property] > 0;
     });
@@ -177,16 +178,18 @@ class App extends Component {
     const countriesWithRank = this.addRanks(countriesWithNameAndFlag);
 
     this.setState({
-      rankCountries: countriesWithRank
+      rankCountries: countriesWithRank,
+      filteredCountries: countriesWithRank
     });
   }
 
   handleChange = (e) => {
-    const value = e.target.value;
-    this.setState({filteredMedalType: value});
-    // TODO: 
-    // call filterByMedalType when value is Gold, Silver or Bronze
-    // if value is All return array of rankCountries
+    const medalType = e.target.value;
+    this.setState({filteredMedalType: medalType});
+    const filteredCountries = medalType !== "All" 
+      ? this.filterCountriesByMedalType(medalType)
+      : this.state.rankCountries;
+    this.setState({filteredCountries});
   }
   
   render() {
@@ -202,7 +205,7 @@ class App extends Component {
           options={["All", "Gold", "Silver", "Bronze"]} 
           handleChange={this.handleChange} 
         />
-        <Table rows={this.state.rankCountries} />
+        <Table rows={this.state.filteredCountries} />
       </div>
     );
   }
