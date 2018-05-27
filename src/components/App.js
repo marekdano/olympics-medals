@@ -162,18 +162,15 @@ class App extends Component {
       return country[property] > 0;
     });
   }
-  /**
-   * Update state of rankCountries after getting an array of sorted countries
-   * with total medals.
-   */
-  componentDidMount() {
-    const countriesData = this.getCountriesObj(this.state.countries);
-    const athletesByCountry = this.groupAthletesBy("country", medalists);
-    const countryWithMedalCounts = this.getTotalMedals(athletesByCountry);
-    const orderedCountries = this.orderCountriesByMedalCount(
-      countryWithMedalCounts
-    );
 
+
+  initState() {
+    const countryWithMedalCounts = this.getTotalMedals(
+      this.groupAthletesBy("country", medalists)
+    );
+    const orderedCountries = this.orderCountriesByMedalCount(countryWithMedalCounts);
+
+    const countriesData = this.getCountriesObj(this.state.countries);
     const countriesWithNameAndFlag = this.addCountryFlagAndName(orderedCountries, countriesData);
     const countriesWithRank = this.addRanks(countriesWithNameAndFlag);
 
@@ -181,6 +178,14 @@ class App extends Component {
       rankCountries: countriesWithRank,
       filteredCountries: countriesWithRank
     });
+  }
+
+  /**
+   * Update state of rankCountries after getting an array of sorted countries
+   * with total medals.
+   */
+  componentDidMount() {
+    this.initState();
   }
 
   handleChange = (e) => {
