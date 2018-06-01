@@ -1,21 +1,23 @@
-import React, {
-  Component
-} from "react";
+import React, { Component } from "react";
 import "./App.css";
 import Table from "./Table/Table";
-import Modal from './Modal/Modal';
-import Select from './shared/Select';
+import Modal from "./Modal/Modal";
+import Select from "./shared/Select";
 import medalists from "../data/olympics_medalists";
 import countries from "../data/countries.json";
 
 class App extends Component {
-  state = {
-    medalists,
-    countries,
-    filteredMedalType: "",
-    filteredCountries: [],
-    rankCountries: []
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      medalists,
+      countries,
+      filteredMedalType: "",
+      filteredCountries: [],
+      rankCountries: []
+    };
+  }
 
   /**
    * Design of development the app requirements
@@ -118,9 +120,9 @@ class App extends Component {
    */
   getCountriesObj(countries) {
     return countries.reduce((list, country) => {
-      list[country['alpha3Code']] = country;
+      list[country["alpha3Code"]] = country;
       return list;
-    }, {})
+    }, {});
   }
 
   /**
@@ -128,28 +130,29 @@ class App extends Component {
    */
   addCountryFlagAndName(rankCountries, countriesData) {
     return rankCountries.map(obj => {
-      const { name, flag } = countriesData[obj['country']];
+      const { name, flag } = countriesData[obj["country"]];
       return { ...obj, name, flag };
     });
   }
 
   /**
-   * Add rank property of number to the list of countries. 
+   * Add rank property of number to the list of countries.
    */
   addRanks(countries) {
-    let prevTotal, currTotal = 0;
+    let prevTotal,
+      currTotal = 0;
     let rank;
     return countries.map((country, index) => {
       currTotal =
         country.totalGold * 10000 +
         country.totalSilver * 100 +
         country.totalBronze;
-      
+
       rank = currTotal === prevTotal ? rank : index + 1;
       prevTotal = currTotal;
 
-      return { ...country, rank }
-    })
+      return { ...country, rank };
+    });
   }
 
   /**
@@ -157,21 +160,25 @@ class App extends Component {
    * gold, silver or bronze.
    */
   filterCountriesByMedalType(medalType) {
-    const property = `total${medalType}` // e.g. totalGold
+    const property = `total${medalType}`; // e.g. totalGold
     return this.state.rankCountries.filter(country => {
       return country[property] > 0;
     });
   }
 
-
   initState() {
     const countryWithMedalCounts = this.getTotalMedals(
       this.groupAthletesBy("country", medalists)
     );
-    const orderedCountries = this.orderCountriesByMedalCount(countryWithMedalCounts);
+    const orderedCountries = this.orderCountriesByMedalCount(
+      countryWithMedalCounts
+    );
 
     const countriesData = this.getCountriesObj(this.state.countries);
-    const countriesWithNameAndFlag = this.addCountryFlagAndName(orderedCountries, countriesData);
+    const countriesWithNameAndFlag = this.addCountryFlagAndName(
+      orderedCountries,
+      countriesData
+    );
     const countriesWithRank = this.addRanks(countriesWithNameAndFlag);
 
     this.setState({
@@ -188,29 +195,39 @@ class App extends Component {
     this.initState();
   }
 
-  handleChange = (e) => {
+  handleChange = e => {
+    e.preventDefault();
     const medalType = e.target.value;
-    this.setState({filteredMedalType: medalType});
-    const filteredCountries = medalType !== "All" 
-      ? this.filterCountriesByMedalType(medalType)
-      : this.state.rankCountries;
-    this.setState({filteredCountries});
-  }
-  
+    this.setState({ filteredMedalType: medalType });
+    const filteredCountries =
+      medalType !== "All"
+        ? this.filterCountriesByMedalType(medalType)
+        : this.state.rankCountries;
+    this.setState({ filteredCountries });
+  };
+
+  handleRowClick = row => {
+    console.log(row);
+    <Modal athletes={row.athletes} active={true} />;
+  };
+
   render() {
-    return ( 
+    return (
       <div className="main">
-        <h3> Medal table </h3> 
-        <h5 className="sub-header">Olympics games 2008</h5> 
-        <Select 
-          name={"medalType"} 
-          title={""} 
+        <h3> Medal table </h3>
+        <h5 className="sub-header">Olympics games 2008</h5>
+        <Select
+          name={"medalType"}
+          title={""}
           placeholder={"Filter medals"}
-          value={this.state.filteredMedalType} 
-          options={["All", "Gold", "Silver", "Bronze"]} 
-          handleChange={this.handleChange} 
+          value={this.state.filteredMedalType}
+          options={["All", "Gold", "Silver", "Bronze"]}
+          handleChange={this.handleChange}
         />
-        <Table rows={this.state.filteredCountries} />
+        <Table
+          rows={this.state.filteredCountries}
+          handleRowClick={this.handleRowClick}
+        />
       </div>
     );
   }

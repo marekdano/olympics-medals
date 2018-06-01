@@ -2,61 +2,52 @@ import React from "react";
 import PropTypes from "prop-types";
 import "./Table.css";
 
-const Table = ({rows}) => { 
+const Table = ({ rows, handleRowClick }) => {
   return (
     <table>
       <thead>
         <tr>
-          <th className="cell-align-left">
-            Rank
-          </th> 
-          <th className="cell-align-left">
-            Country
+          <th className="cell-align-left">Rank</th>
+          <th className="cell-align-left">Country</th>
+          <th>
+            <span className="medal-icon medal-icon__gold" />
           </th>
           <th>
-            <span className="medal-icon medal-icon__gold"></span>
+            <span className="medal-icon medal-icon__silver" />
           </th>
           <th>
-            <span className="medal-icon medal-icon__silver"></span>
+            <span className="medal-icon medal-icon__bronze" />
           </th>
-          <th>
-            <span className="medal-icon medal-icon__bronze"></span>
-          </th> 
-          <th>
-            Total
-          </th> 
-          <th></th>
-        </tr> 
-      </thead> 
-      <tbody> 
-        {rows && 
+          <th>Total</th>
+          <th />
+        </tr>
+      </thead>
+      <tbody>
+        {rows &&
           rows.map(row => {
-            return ( 
+            return (
               <tr key={row.country}>
-                <td className="cell-align-left">
-                  {row.rank}
-                </td>
+                <td className="cell-align-left">{row.rank}</td>
                 <td>
                   <div className="cell cell-align-left">
-                    <img src={row.flag} alt="country flag"/>
+                    <img src={row.flag} alt="country flag" />
                     <span>{row.name}</span>
                   </div>
                 </td>
                 <td>{row.totalGold}</td>
-                <td>{row.totalSilver}</td> 
+                <td>{row.totalSilver}</td>
                 <td>{row.totalBronze}</td>
-                <td>{row.athletes.length}</td> 
-                <td>
-                  <span className="icon__plus"></span>
+                <td>{row.athletes.length}</td>
+                <td onClick={() => handleRowClick(row)}>
+                  <span className="icon__plus" />
                 </td>
               </tr>
             );
-          })
-        }
-      </tbody> 
+          })}
+      </tbody>
     </table>
   );
-}
+};
 
 Table.propTypes = {
   rows: PropTypes.arrayOf(
@@ -78,7 +69,8 @@ Table.propTypes = {
       totalBronze: PropTypes.number.isRequired,
       rank: PropTypes.number.isRequired
     })
-  )
+  ),
+  handleRowClick: PropTypes.func.isRequired
 };
 
 export default Table;
