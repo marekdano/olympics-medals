@@ -15,7 +15,11 @@ class App extends Component {
       countries,
       filteredMedalType: "",
       filteredCountries: [],
-      rankCountries: []
+      rankCountries: [],
+      modal: {
+        row: null,
+        active: false
+      }
     };
   }
 
@@ -207,27 +211,35 @@ class App extends Component {
   };
 
   handleRowClick = row => {
-    console.log(row);
-    <Modal athletes={row.athletes} active={true} />;
+    this.setState({ modal: { row: row, active: true } });
   };
 
   render() {
     return (
-      <div className="main">
-        <h3> Medal table </h3>
-        <h5 className="sub-header">Olympics games 2008</h5>
-        <Select
-          name={"medalType"}
-          title={""}
-          placeholder={"Filter medals"}
-          value={this.state.filteredMedalType}
-          options={["All", "Gold", "Silver", "Bronze"]}
-          handleChange={this.handleChange}
-        />
-        <Table
-          rows={this.state.filteredCountries}
-          handleRowClick={this.handleRowClick}
-        />
+      <div>
+        {this.state.modal.row && (
+          <Modal
+            athletes={this.state.modal.row.athletes}
+            active={this.state.modal.active}
+          />
+        )}
+
+        <div className="main">
+          <h3> Medal table </h3>
+          <h5 className="sub-header">Olympics games 2008</h5>
+          <Select
+            name={"medalType"}
+            title={""}
+            placeholder={"Filter medals"}
+            value={this.state.filteredMedalType}
+            options={["All", "Gold", "Silver", "Bronze"]}
+            handleChange={this.handleChange}
+          />
+          <Table
+            rows={this.state.filteredCountries}
+            handleRowClick={this.handleRowClick}
+          />
+        </div>
       </div>
     );
   }
