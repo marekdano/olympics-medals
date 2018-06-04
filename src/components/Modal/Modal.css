@@ -41,12 +41,47 @@
 }
 
 .modal-close {
+  height: 32px;
+  max-height: 32px;
+  max-width: 32px;
+  min-height: 32px;
+  min-width: 32px;
+  width: 32px;
   background: none;
-  height: 40px;
   position: fixed;
   right: 20px;
   top: 20px;
-  width: 40px;
+  border: none;
+  cursor: pointer;
+  pointer-events: auto;
+  display: inline-block;
+  flex-grow: 0;
+  flex-shrink: 0;
+  font-size: 0;
+  outline: 0;
+  vertical-align: top;
+}
+
+.modal-close::before {
+  height: 50%;
+  width: 2px;
+}
+
+.modal-close::after {
+  height: 2px;
+  width: 50%;
+}
+
+.modal-close::after,
+.modal-close::before {
+  background-color: #fff;
+  content: "";
+  display: block;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%) rotate(45deg);
+  transform-origin: center center;
 }
 
 .box {

@@ -33,6 +33,7 @@ const Modal = ({ athletes, active }) => {
           </table>
         </div>
       </div>
+      <button className="modal-close" aria-label="close" />
     </div>
   );
 };
