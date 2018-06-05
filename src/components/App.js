@@ -211,7 +211,11 @@ class App extends Component {
   };
 
   handleRowClick = row => {
-    this.setState({ modal: { row: row, active: true } });
+    this.setState({ modal: { row, active: true } });
+  };
+
+  closeModal = () => {
+    this.setState({ modal: { ...this.state.modal, active: false } });
   };
 
   render() {
@@ -221,6 +225,7 @@ class App extends Component {
           <Modal
             athletes={this.state.modal.row.athletes}
             active={this.state.modal.active}
+            close={this.closeModal}
           />
         )}
 

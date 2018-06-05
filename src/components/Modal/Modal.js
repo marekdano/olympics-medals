@@ -2,9 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import "./Modal.css";
 
-const Modal = ({ athletes, active }) => {
+const Modal = ({ athletes, active, close }) => {
+  const modalStyle = `modal ${active ? "is-active" : ""}`;
   return (
-    <div className="modal is-active">
+    <div className={modalStyle}>
       <div className="modal-bg"> </div>
       <div className="modal-content">
         <div className="box">
@@ -33,7 +34,7 @@ const Modal = ({ athletes, active }) => {
           </table>
         </div>
       </div>
-      <button className="modal-close" aria-label="close" />
+      <button className="modal-close" aria-label="close" onClick={close} />
     </div>
   );
 };
@@ -47,7 +48,8 @@ Modal.propTypes = {
       medal: PropTypes.string.isRequired
     })
   ),
-  active: PropTypes.bool.isRequired
+  active: PropTypes.bool.isRequired,
+  close: PropTypes.func.isRequired
 };
 
 export default Modal;
