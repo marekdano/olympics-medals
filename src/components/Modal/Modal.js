@@ -2,8 +2,24 @@ import React from "react";
 import PropTypes from "prop-types";
 import "./Modal.css";
 
-const Modal = ({ athletes, active, close }) => {
+const Modal = ({ athletes: list, active, close }) => {
+  const athletes = [
+    ...list.filter(a => a.medal === "Gold"),
+    ...list.filter(a => a.medal === "Silver"),
+    ...list.filter(a => a.medal === "Bronze")
+  ];
   const modalStyle = `modal ${active ? "is-active" : ""}`;
+  const medalStyle = medalType => {
+    let style = "medal-icon";
+    if (medalType === "Gold") {
+      style += " medal-icon__gold";
+    } else if (medalType === "Silver") {
+      style += " medal-icon__silver";
+    } else if (medalType === "Bronze") {
+      style += " medal-icon__bronze";
+    }
+    return style;
+  };
   return (
     <div className={modalStyle}>
       <div className="modal-bg" />
@@ -26,7 +42,9 @@ const Modal = ({ athletes, active, close }) => {
                       <td>
                         {person.sex} {person.event}
                       </td>
-                      <td>{person.medal}</td>
+                      <td>
+                        <div className={medalStyle(person.medal)} />
+                      </td>
                     </tr>
                   );
                 })}
