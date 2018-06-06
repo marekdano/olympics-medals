@@ -6,7 +6,7 @@ const Modal = ({ athletes, active, close }) => {
   const modalStyle = `modal ${active ? "is-active" : ""}`;
   return (
     <div className={modalStyle}>
-      <div className="modal-bg"> </div>
+      <div className="modal-bg" />
       <div className="modal-content">
         <div className="box">
           <table>

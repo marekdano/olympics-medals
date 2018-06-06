@@ -92,3 +92,17 @@
   display: block;
   padding: 1.25rem;
 }
+
+.box table thead {
+  text-align: left;
+  background: #fab842;
+}
+
+.box table thead th {
+  padding: 0.4rem 0.5rem 0.3rem;
+  vertical-align: center;
+}
+
+.box table tbody tr:hover {
+  background: #ededed;
+}
