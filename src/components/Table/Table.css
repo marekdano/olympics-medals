@@ -27,10 +27,10 @@ td img {
 
 td .icon__plus::after {
   display: block;
-  content: '';
+  content: "";
   width: 20px;
   height: 20px;
-  background: url(/icon__plus.svg) no-repeat;
+  background: url(./icon__plus.svg) no-repeat;
   background-size: contain;
 }
 
