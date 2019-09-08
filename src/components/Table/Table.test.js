@@ -11,7 +11,7 @@ describe("<Table />", () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = shallow(<Table />);
+    wrapper = shallow(<Table handleRowClick={() => {}}/>);
   });
 
   it("should render table with data", () => {

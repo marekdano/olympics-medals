@@ -155,7 +155,7 @@ describe("AppComponent", () => {
     it("should have two countries with the same rank number", () => {
       it("should add rank to each country", () => {
       const athletesByCountry = App.prototype.groupAthletesBy(
-        "country"
+        "country",
         athletes
       );
       const countryWithMedalCounts = App.prototype.getTotalMedals(
